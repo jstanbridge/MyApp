@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if user.email %}
+    <form action="{{ url_for('add_post') }}" method=post class=add-entry enctype="multipart/form-data">
+      <dl>
+        <dt>Game Title</dt>
+        <dd><input type=text size=30 name=title></dd>
+
+        <dt>Publisher</dt>
+        <dd><input type=text size=30 name=publisher></dd>
+
+        <dt>Number of Players</dt>
+        <dd>
+          <div class="controls">
+          <label class="radio inline" for="players-0">
+            <input type="radio" name="players" id="players-0" value="1" checked="checked">
+            1
+          </label>
+          <label class="radio inline" for="players-1">
+            <input type="radio" name="players" id="players-1" value="2">
+            2
+          </label>
+          <label class="radio inline" for="players-2">
+            <input type="radio" name="players" id="players-2" value="1-3">
+            1-3
+          </label>
+          <label class="radio inline" for="players-3">
+            <input type="radio" name="players" id="players-3" value="1-5">
+            1-5
+          </label>
+          <label class="radio inline" for="players-4">
+            <input type="radio" name="players" id="players-4" value="6+">
+            6+
+            </label>
+          </div>
+          </dd>
+
+        <dt>Time per Player</dt>
+        <dd>
+        <div class="controls">
+          <select id="playtime" name="playtime" class="input-xlarge">
+            <option>5 min</option>
+            <option>10 min</option>
+            <option>15 min</option>
+            <option>20 min</option>
+            <option>25 min</option>
+            <option>30 min</option>
+            <option>45 min</option>
+            <option>1 hr</option>
+            <option>1.5 hr+</option>
+          </select>
+        </div>
+        </dd>
+
+        <dt>Age Range</dt>
+        <dd>
+        <div class="controls">
+          <select id="age" name="age" class="input-xlarge">
+            <option>7 &amp; Under</option>
+            <option>7-12</option>
+            <option>12-17</option>
+            <option>18+</option>
+            <option>All Ages</option>
+          </select>
+        </div>
+        </dd>
+
+        <dt>Game Type</dt>
+        <dd>
+        <div class="controls">
+          <label class="checkbox" for="type-0">
+            <input type="checkbox" name="type" id="type-0" value="Strategy">
+            Strategy
+          </label>
+          <label class="checkbox" for="type-1">
+            <input type="checkbox" name="type" id="type-1" value="Family">
+            Family
+          </label>
+          <label class="checkbox" for="type-2">
+            <input type="checkbox" name="type" id="type-2" value="Abstract">
+            Abstract
+          </label>
+          <label class="checkbox" for="type-3">
+            <input type="checkbox" name="type" id="type-3" value="Co-Op">
+            Co-Op
+          </label>
+          <label class="checkbox" for="type-4">
+            <input type="checkbox" name="type" id="type-4" value="Dexterity">
+            Dexterity
+          </label>
+          <label class="checkbox" for="type-5">
+            <input type="checkbox" name="type" id="type-5" value="Euro">
+            Euro
+          </label>
+          <label class="checkbox" for="type-6">
+            <input type="checkbox" name="type" id="type-6" value="Party">
+            Party
+          </label>
+        </div>
+        </dd>
+
+        <dt>Comments</dt>
+        <dd>
+        <div class="controls">                     
+          <textarea id="comments" name="comments">What did you think of this game?</textarea>
+        </div>
+        </dd>
+
+        <dd><input type="submit" value="Submit Review" id="submit"></dd>
+
+      </dl>
+    </form>
+  {% endif %}
+  <ul class=entries>
+  {% for post in posts %}
+    <div class="review">
+    <li><h2>{{ post['title'] }}</h2>{{ post['text']|safe }}
+    <li><h3>Publisher</h3>{{ post['publisher']|safe }}
+    <li><h3># of Players</h3>{{ post['players']|safe }}
+    <li><h3>Time per Player</h3>{{ post['playtime']|safe }}
+    <li><h3>Age Range</h3>{{ post['age']|safe }}
+    <li><h3>Genre</h3>{{ post['type']|safe }}
+    <li><h3>Reviewer Comments</h3>{{ post['comments']|safe }}
+    </div>
+  {% else %}
+    <li><em>No reviews have been submitted!</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
